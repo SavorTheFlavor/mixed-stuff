@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>.....</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='style.css') }}">
+</head>
+<body>
+    {% for item in food %}
+        <h1>{{ item }}</h1>
+    {% endfor %}
+</body>
+</html>

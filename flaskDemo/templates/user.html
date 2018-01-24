@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>.....</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='style.css') }}">
+</head>
+<body>
+{% if user %}
+    <h1>Hey!!! {{ user }}</h1>
+{% else %}
+    <h1>please log in</h1>
+{% endif %}
+</body>
+</html>
