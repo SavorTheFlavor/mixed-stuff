@@ -8,6 +8,7 @@ import java.nio.ByteBuffer;
 import java.nio.MappedByteBuffer;
 import java.nio.channels.FileChannel;
 import java.nio.channels.FileChannel.MapMode;
+import java.nio.charset.CharsetEncoder;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 
@@ -24,6 +25,13 @@ public class FileUtil {
 		
 		FileChannel inChannel = fis.getChannel();
 		FileChannel outChannel = fos.getChannel();
+		
+		/*transfer between channels.... */ 
+		//outChannel.transferFrom(inChannel, 0, inChannel.size());
+		
+		/* scattering  and  gathering */
+	//		inChannel.read(ByteBuffer[] dests);
+	//		outChannel.write(ByteBuffer[] srcs);
 		
 		ByteBuffer buf = ByteBuffer.allocate(1024);
 		while((inChannel.read(buf)) != -1) {
