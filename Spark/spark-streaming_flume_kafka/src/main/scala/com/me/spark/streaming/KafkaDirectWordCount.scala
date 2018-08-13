@@ -1,10 +1,10 @@
 package com.me.spark.streaming
 
-
 import org.apache.spark.SparkConf
 import org.apache.spark.streaming.kafka.KafkaUtils
 import org.apache.spark.streaming.{Seconds, StreamingContext}
 import kafka.serializer.StringDecoder
+import org.apache.kafka.clients.producer.Producer
 /**
   * Spark Streaming(consumer)对接Kafka的方式二
   * createDirectStream (No Receivers)
@@ -20,26 +20,22 @@ object KafkaDirectWordCount {
 
   def main(args: Array[String]): Unit = {
 
-    if(args.length != 2) {
+    if(args.length != 2){
       System.err.println("Usage: KafkaDirectWordCount <brokers> <topics>")
       System.exit(1)
     }
 
     val Array(brokers, topics) = args
 
-    val sparkConf = new SparkConf() //.setAppName("KafkaReceiverWordCount")
-      //.setMaster("local[2]")
+    val sparkConf = new SparkConf()
 
     val ssc = new StreamingContext(sparkConf, Seconds(5))
-
     val topicsSet = topics.split(",").toSet
-    val kafkaParams = Map[String,String]("metadata.broker.list"-> brokers)
+    val kafkaParams = Map[String, String]("metadata.broker.list" -> brokers)
 
-    val messages = KafkaUtils.createDirectStream[String,String,StringDecoder,StringDecoder](
-    ssc,kafkaParams,topicsSet
-    )
+    val messages = KafkaUtils.createDirectStream[String, String, StringDecoder, StringDecoder](ssc, kafkaParams, topicsSet)
 
-    // TODO... 自己去测试为什么要取第二个
+    // TODO... 为什么要取第二个?
     messages.map(_._2).flatMap(_.split(" ")).map((_,1)).reduceByKey(_+_).print()
 
     ssc.start()
