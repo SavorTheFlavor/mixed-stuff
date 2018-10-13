@@ -10,7 +10,7 @@ public class MyClassLoader extends ClassLoader {
 
 
     /**
-     * @param name
+     * @param name class's fully qualified name
      * @return
      * @throws ClassNotFoundException
      */
